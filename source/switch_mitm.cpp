@@ -69,6 +69,11 @@ void switch_init()
     padInitializeDefault( &pad );
     padRepeaterInitialize( &pad_r, 60, 4 );
 
+#ifdef DEBUG
+    socketInitializeDefault();
+    nxlinkStdio();
+#endif
+
     hidInitializeTouchScreen();
 
     Result rc = romfsInit();
@@ -79,6 +84,10 @@ void switch_init()
 void switch_deinit()
 {
     romfsExit();
+    hidExit();
+#ifdef DEBUG
+    socketExit();
+#endif
 }
 
 int switch_getinput( void* data )
