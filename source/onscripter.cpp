@@ -60,7 +60,7 @@ extern "C" int main( int argc, char **argv )
 int main( int argc, char **argv )
 #endif
 {
-#if defined(WIN32) || ( defined(__SWITCH__) && !defined(DEBUG) )
+#if defined(WIN32)
     freopen("stdout.txt", "w", stdout);
     freopen("stderr.txt", "w", stderr);
 #endif
