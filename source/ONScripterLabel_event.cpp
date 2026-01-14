@@ -1248,12 +1248,7 @@ int ONScripterLabel::eventLoop()
     thread_id = SDL_CreateThread( switch_getinput, "Switch mitm process", thread_data );
 #endif
 
-#ifdef SDL2
-    while (1) {
-      while ( SDL_PollEvent(&event) ) {
-#else
     while ( SDL_WaitEvent(&event) ) {
-#endif
         // ignore continous SDL_MOUSEMOTION
         while (event.type == SDL_MOUSEMOTION){
         #ifdef SDL2
@@ -1402,12 +1397,6 @@ int ONScripterLabel::eventLoop()
           default:
             break;
         }
-
-#ifdef SDL2
-      }
-
-      SDL_Delay( FPS_TO_FRAMETIME( 83 ) );
-#endif
 
     }
     
