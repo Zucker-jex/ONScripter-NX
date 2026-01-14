@@ -239,6 +239,7 @@ int switch_getinput( void* data )
         SDL_Delay( 10 );
     }
 
+    return 0;
 }
 
 FILE *romfsOpen( const char *path, const char *mode )
