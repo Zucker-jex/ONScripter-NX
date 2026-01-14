@@ -51,9 +51,9 @@ else
 endif
 
 ifdef GAME
-	APP_TITLE	:=	$(GAME) (ONScripter-NX)
+	APP_TITLE	:=	$(strip $(GAME) $(HD)) (ONScripter-NX)
 else
-	APP_TITLE	:=	ONScripter-NX $(HD)
+	APP_TITLE	:=	$(strip ONScripter-NX $(HD))
 endif
 
 APP_AUTHOR	:=	clamintus
@@ -70,7 +70,11 @@ CFLAGS	:=	-g -Wall -ffunction-sections -Wno-write-strings -Wno-narrowing \
 
 CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags` `smpeg2-config --cflags`\
             -DUSE_OGG_VORBIS -DENABLE_1BYTE_CHAR -DFORCE_1BYTE_CHAR -DINSANI -DSDL2
-#CFLAGS	+=	-DDEBUG
+ifdef DEBUG
+	CFLAGS	+= -DDEBUG
+else
+	CFLAGS	+= -fomit-frame-pointer
+endif
 
 ifdef ENABLE_HD
 	CFLAGS += -DENABLE_HD
@@ -86,15 +90,15 @@ LIBS	:=  `sdl2-config --libs`  `smpeg2-config --libs` \
 			-L$(CURDIR)/lib						  -lSDL2_ttf \
 			-L/opt/devkitpro/libnx/lib 		      -lnx \
 			-L/opt/devkitpro/portlibs/switch/lib  -lSDL2_image \
-		   	-L/opt/devkitpro/portlibs/switch/lib  -lz -lm \
-		   	-L/opt/devkitpro/portlibs/switch/lib  -lz -ljpeg -lwebp -lm -lnx \
-			-L/opt/devkitpro/portlibs/switch/lib  -lfreetype -lbz2 \
-		   	-L/opt/devkitpro/portlibs/switch/lib  -lz -lpng16 -lm -lz -lSDL2_mixer -lSDL2 \
+							      -lz -lm \
+							      -lz -ljpeg -lwebp -lm -lnx \
+							      -lfreetype -lharfbuzz -lbz2 \
+							      -lz -lpng16 -lm -lz -lSDL2_mixer -lSDL2 \
 		       									  -march=armv8-a -fPIE -lEGL -lglapi \
 												  -ldrm_nouveau -lnx -lpthread \
-		   	-L/opt/devkitpro/portlibs/switch/lib  -lvorbisidec \
-			-L/opt/devkitpro/portlibs/switch/lib  -logg -lmodplug -lstdc++ -lmpg123 -lm -lopusfile \
-			-L/opt/devkitpro/portlibs/switch/lib  -logg -lopus -lm
+							      -lvorbisidec \
+							      -logg -lmodplug -lstdc++ -lmpg123 -lm -lopusfile \
+							      -logg -lopus -lm
 
 
 #---------------------------------------------------------------------------------
